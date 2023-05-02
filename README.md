@@ -9,3 +9,5 @@ Inspired by: https://www.hotrails.dev/turbo-rails
     - Modify room.rb and add `validates :name, presence: true`
     - Modify migration and add `null: false` to the uuid column
 - `bin/rails db:migrate`
+- `bin/rails generate controller Home`
+- `bin/rails generate controller Rooms`
