@@ -6,3 +6,31 @@
 <div>
     <%= link_to "Leave room", root_path %>
 </div>
+<hr/>
+<div>
+    <% @room.users.each do |u| %>
+        <p>
+            <% if u.id == session[:current_user_id]%>
+                <b>(You) <%= u.name %></b>:&nbsp
+            <% else %>
+                <%= u.name %>:&nbsp
+            <% end %>
+            <% if @room.estimating %>
+                <span>__</span>
+            <% else %>
+                <%= u.estimate %>
+            <% end %>
+        </p>
+    <% end %>
+</div>
+<div>
+    <% [1,2,3,5,8,13,21,40].each do |e| %>
+        <%= button_to e, estimate_user_path(id: session[:current_user_id], estimate: e), :method => :put %>
+    <% end %>
+</div>
+<div>
+    <%= button_to "Show cards", show_cards_path, :method => :put %>
+</div>
+<div>
+    <%= button_to "Reset", reset_room_path, :method => :put %>
+</div>
