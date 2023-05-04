@@ -7,6 +7,11 @@ class RoomsController < ApplicationController
         @room = Room.create(name: SecureRandom.uuid)
 
         if @room
+            if !session[:current_user_id].nil?
+                # Assign existing user to new room (only 1 room allowed) and clear estimate
+                User.where(:id => session[:current_user_id])
+                    .update_all({:room_id => @room.id, :estimate => nil})
+            end
             redirect_to show_room_path(@room.name)
         else
             render :index, notice: "Error creating room"
