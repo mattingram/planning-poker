@@ -1,3 +1,5 @@
+require 'random_name_generator'
+
 class RoomsController < ApplicationController
     before_action :set_room
 
@@ -17,7 +19,11 @@ class RoomsController < ApplicationController
         end
 
         if session[:current_user_id].nil?
-            session[:current_user_id] = User.create(name: SecureRandom.alphanumeric, room_id: @room.id).id
+            #ELVEN, FANTASY, GOBLIN, ROMAN, flip_mode
+            # rng = RandomNameGenerator.new(RandomNameGenerator::FANTASY)
+            rng = RandomNameGenerator.flip_mode
+            @new_name = rng.compose(2)
+            session[:current_user_id] = User.create(name: @new_name, room_id: @room.id).id
         end
 
         @user = User.find(session[:current_user_id])
