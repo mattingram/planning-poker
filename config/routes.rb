@@ -5,12 +5,10 @@ Rails.application.routes.draw do
   root "home#index"
 
   post "rooms/create", to: "rooms#create", as: "create_room"
-
   get "rooms/:name", to: "rooms#show", as: "show_room"
+  put "rooms/:name/reset", to: "rooms#reset", as: "reset_room"
+  put "rooms/:name/show_cards", to: "rooms#show_cards", as: "show_cards"
 
-  put "rooms/:name", to: "rooms#reset", as: "reset_room"
-
-  put "rooms/:name", to: "rooms#show_cards", as: "show_cards"
-
-  put "users/:id/estimate", to: "users#estimate", as: "estimate_user"
+  put "users/estimate", to: "users#estimate", as: "estimate_user"
+  put "users/set_name", to: "users#set_name", as: "set_name_user"
 end

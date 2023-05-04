@@ -1,9 +1,9 @@
 class RoomsController < ApplicationController
-    before_action :set_room, only: [:show, :edit, :update, :destroy]
+    before_action :set_room
 
     def create
         @room = Room.create(name: SecureRandom.uuid)
-        session[:current_user_id] = User.create(name: SecureRandom.alphanumeric, room_id: @room.id).id
+
         if @room
             redirect_to show_room_path(@room.name)
         else
@@ -15,6 +15,12 @@ class RoomsController < ApplicationController
         if @room == nil
             redirect_to root_path
         end
+
+        if session[:current_user_id].nil?
+            session[:current_user_id] = User.create(name: SecureRandom.alphanumeric, room_id: @room.id).id
+        end
+
+        @user = User.find(session[:current_user_id])
     end
 
     def reset
@@ -22,10 +28,12 @@ class RoomsController < ApplicationController
         @room.users.each do |user|
             user.update_attribute(:estimate, nil)
         end
+        redirect_to show_room_path(@room.name)
     end
 
     def show_cards
         @room.update_attribute(:estimating, false)
+        redirect_to show_room_path(@room.name)
     end
 
     private

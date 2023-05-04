@@ -1,0 +1,1 @@
+Rails.application.config.session_store :cookie_store, key: "_planning_poker_session", expire_after: 365.days

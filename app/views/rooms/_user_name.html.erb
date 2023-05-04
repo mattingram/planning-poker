@@ -1,0 +1,5 @@
+<%= form_with url: set_name_user_path, method: :put do |form| %>
+  <%= form.label :name, "Username:" %>
+  <%= form.text_field :name, value: @user.name %>
+  <%= form.submit "Edit" %>
+<% end %>

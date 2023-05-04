@@ -1,36 +1,42 @@
-<h1>Room</h1>
-<h2>ID: <%= @room.name %></h2>
-<div>
-    <%= link_to show_room_url %>
-</div>
-<div>
-    <%= link_to "Leave room", root_path %>
-</div>
+<h1>Planning Poker</h1>
+<h2>Room: <%= link_to @room.name, show_room_url %></h2>
+<%= link_to "Leave room", root_path %>
 <hr/>
-<div>
+<%= render "user_name", object: @user %>
+ <% if @room.estimating %>
+    <h2>Estimating</h2>
+<% else %>
+    <h2>Results</h2>
+<% end %>
+<ul>
+    <li><span><b>(You) <%= @user.name %></b>:&nbsp;<%= @user.estimate %></span></li>
     <% @room.users.each do |u| %>
-        <p>
-            <% if u.id == session[:current_user_id]%>
-                <b>(You) <%= u.name %></b>:&nbsp
-            <% else %>
-                <%= u.name %>:&nbsp
-            <% end %>
-            <% if @room.estimating %>
-                <span>__</span>
-            <% else %>
-                <%= u.estimate %>
-            <% end %>
-        </p>
+        <% if u.id != @user.id %>
+            <li>
+                <span><%= u.name %>:&nbsp;</span>
+                <% if @room.estimating %>
+                    <% if u.estimate %>
+                        <span>voted</span>
+                    <% else %>
+                        <span>....</span>
+                    <% end %>
+                <% elsif u.estimate %>
+                    <%= u.estimate %>
+                <% else %>
+                    <span>didn't vote</span>
+                <% end %>
+            </li>
+        <% end %>
     <% end %>
-</div>
+</ul>
 <div>
     <% [1,2,3,5,8,13,21,40].each do |e| %>
-        <%= button_to e, estimate_user_path(id: session[:current_user_id], estimate: e), :method => :put %>
+        <%= button_to e, estimate_user_path(estimate: e), :method => :put %>
     <% end %>
 </div>
 <div>
     <%= button_to "Show cards", show_cards_path, :method => :put %>
 </div>
 <div>
-    <%= button_to "Reset", reset_room_path, :method => :put %>
+    <%= button_to "Clear cards", reset_room_path, :method => :put %>
 </div>
