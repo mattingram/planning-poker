@@ -47,6 +47,14 @@ class RoomsController < ApplicationController
         redirect_to show_room_path(@room.name)
     end
 
+    def leave
+        @user = User.find(session[:current_user_id])
+        @user.update_attribute(:room_id, nil)
+        @user.update_attribute(:estimate, nil)
+
+        redirect_to root_path
+    end
+
     private
 
     def set_room

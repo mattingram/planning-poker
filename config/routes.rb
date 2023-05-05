@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   post "rooms/create", to: "rooms#create", as: "create_room"
   get "rooms/:name", to: "rooms#show", as: "show_room"
   put "rooms/:name/reset", to: "rooms#reset", as: "reset_room"
+  post "rooms/:name/leave", to: "rooms#leave", as: "leave_room"
   put "rooms/:name/show_cards", to: "rooms#show_cards", as: "show_cards"
 
   put "users/estimate", to: "users#estimate", as: "estimate_user"

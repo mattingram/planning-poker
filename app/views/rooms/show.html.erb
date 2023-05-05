@@ -1,6 +1,6 @@
 <h1>Planning Poker</h1>
 <h2>Room: <%= link_to @room.name, show_room_url %></h2>
-<%= link_to "Leave room", root_path %>
+<%= button_to "Leave room", leave_room_path, :method => :post %>
 <hr/>
 <%= render "user_name", object: @user %>
  <% if @room.estimating %>
@@ -8,7 +8,7 @@
 <% else %>
     <h2>Results</h2>
 <% end %>
-<ul>
+<ol style="font-size:18px">
     <li><span><b>(You) <%= @user.name %></b>:&nbsp;<%= @user.estimate %></span></li>
     <% @room.users.each do |u| %>
         <% if u.id != @user.id %>
@@ -28,7 +28,7 @@
             </li>
         <% end %>
     <% end %>
-</ul>
+</ol>
 <div>
     <% [1,2,3,5,8,13,21,40].each do |e| %>
         <%= button_to e, estimate_user_path(estimate: e), :method => :put %>
