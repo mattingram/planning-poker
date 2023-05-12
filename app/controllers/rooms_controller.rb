@@ -18,12 +18,14 @@ class RoomsController < ApplicationController
         end
     end
 
-    def show
-        if @room == nil
-            redirect_to root_path
+    def index
+        if @room == nil?
+            redirect_to root_path    # TODO: render invalid room error
         end
 
         if session[:current_user_id].nil?
+            # TODO Enhancement: allow user to regen random names with type and length toggles
+
             #ELVEN, FANTASY, GOBLIN, ROMAN, flip_mode
             # rng = RandomNameGenerator.new(RandomNameGenerator::FANTASY)
             rng = RandomNameGenerator.flip_mode
