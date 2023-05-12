@@ -19,13 +19,17 @@ class RoomsController < ApplicationController
     end
 
     def index
-        if @room == nil?
-            redirect_to root_path    # TODO: render invalid room error
+        if @room.nil?
+            redirect_to root_path, notice: "Room not found"
         end
 
-        if session[:current_user_id].nil?
-            # TODO Enhancement: allow user to regen random names with type and length toggles
+        if session[:current_user_id].nil? #what if user is logging in from a different device?
+            # they have to leave the room on the old device
+            # maybe add an option to kick out other players?
 
+
+
+            # TODO Enhancement: allow user to regen random names with type and length toggles
             #ELVEN, FANTASY, GOBLIN, ROMAN, flip_mode
             # rng = RandomNameGenerator.new(RandomNameGenerator::FANTASY)
             rng = RandomNameGenerator.flip_mode
