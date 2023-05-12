@@ -35,7 +35,7 @@
     <% end %>
 </div>
 <div>
-    <%= button_to "Show cards", show_cards_path, :method => :put %>
+    <%= button_to @room.estimating ? "Show cards" : "Hide cards", show_cards_path, :method => :put %>
 </div>
 <div>
     <%= button_to "Clear cards", reset_room_path, :method => :put %>

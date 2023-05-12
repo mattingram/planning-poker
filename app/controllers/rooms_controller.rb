@@ -43,7 +43,7 @@ class RoomsController < ApplicationController
     end
 
     def show_cards
-        @room.update_attribute(:estimating, false)
+        @room.update_attribute(:estimating, !@room.estimating)
         redirect_to show_room_path(@room.name)
     end
 
