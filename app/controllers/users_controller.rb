@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     end
 
     def set_name
-        @user.update_attribute(:name, params[:name])
+        @user.update_attribute(:name, params[:user_name])
         redirect_to show_room_path(@user.room.name)
     end
 

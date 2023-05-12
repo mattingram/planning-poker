@@ -1,17 +1,24 @@
 <h1>Planning Poker</h1>
 <h2>Room: <%= link_to @room.name, show_room_url %></h2>
-<%= button_to "Leave room", leave_room_path, :method => :post %>
-<hr/>
-<%= render "user_name", object: @user %>
+
+<% if @user %>
+    <%= render partial: "user_name", object: @user %>
+    <%= button_to "Leave room", leave_room_path, :method => :post %>
+<% else %>
+    <%= render partial: "create_user", locals: { user_name: @random_username } %>
+<% end %>
+
  <% if @room.estimating %>
     <h2>Estimating</h2>
 <% else %>
     <h2>Results</h2>
 <% end %>
 <ol style="font-size:18px">
-    <li><span><b>(You) <%= @user.name %></b>:&nbsp;<%= @user.estimate %></span></li>
+    <% unless @user.nil? %>
+        <li><span><b>(You) <%= @user.name %></b>:&nbsp;<%= @user.estimate %></span></li>
+    <% end %>
     <% @room.users.each do |u| %>
-        <% if u.id != @user.id %>
+        <% if u.id != @user&.id %>
             <li>
                 <span><%= u.name %>:&nbsp;</span>
                 <% if @room.estimating %>
@@ -30,8 +37,10 @@
     <% end %>
 </ol>
 <div>
-    <% [1,2,3,5,8,13,21,40].each do |e| %>
-        <%= button_to e, estimate_user_path(estimate: e), :method => :put %>
+    <% unless @user.nil? %>
+        <% [1,2,3,5,8,13,21,40].each do |e| %>
+            <%= button_to e, estimate_user_path(estimate: e), :method => :put %>
+        <% end %>
     <% end %>
 </div>
 <div>
